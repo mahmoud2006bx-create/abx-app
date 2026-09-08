@@ -58,6 +58,11 @@ font-weight:bold;
 cursor:pointer
 }
 
+button:disabled{
+opacity:.6;
+cursor:not-allowed
+}
+
 .secondary{
 background:#eee;
 color:#111
@@ -79,7 +84,9 @@ color:#111;
 text-decoration:underline
 }
 
-.hidden{display:none!important}
+.hidden{
+display:none!important
+}
 
 .message{
 text-align:center;
@@ -112,7 +119,11 @@ background:#eee;
 color:#111
 }
 
-.info-row,.tree-level,.network-box,.deposit-card,.withdraw-card{
+.info-row,
+.tree-level,
+.network-box,
+.deposit-card,
+.withdraw-card{
 background:#f5f5f5;
 padding:15px;
 border-radius:12px;
@@ -130,7 +141,8 @@ font-size:16px;
 word-break:break-word
 }
 
-.ltr,.address{
+.ltr,
+.address{
 direction:ltr;
 text-align:left
 }
@@ -151,7 +163,9 @@ margin-top:8px;
 font-size:14px
 }
 
-.file-box{margin-top:15px}
+.file-box{
+margin-top:15px
+}
 
 .deposit-card img{
 width:100%;
@@ -264,11 +278,21 @@ margin-top:12px
 
 <h2>تسجيل الدخول</h2>
 
-<input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+<input
+type="email"
+id="loginEmail"
+placeholder="البريد الإلكتروني"
+autocomplete="email">
 
-<input type="password" id="loginPassword" placeholder="كلمة المرور">
+<input
+type="password"
+id="loginPassword"
+placeholder="كلمة المرور"
+autocomplete="current-password">
 
-<button onclick="login()">تسجيل الدخول</button>
+<button onclick="login()">
+تسجيل الدخول
+</button>
 
 <button class="linkButton" onclick="showReset()">
 نسيت كلمة المرور؟
@@ -291,24 +315,53 @@ margin-top:12px
 
 <h2>إنشاء حساب</h2>
 
-<input type="email" id="registerEmail" placeholder="البريد الإلكتروني">
+<input
+type="email"
+id="registerEmail"
+placeholder="البريد الإلكتروني"
+autocomplete="email">
 
-<input type="text" id="registerUsername" placeholder="اسم المستخدم">
+<input
+type="text"
+id="registerUsername"
+placeholder="اسم المستخدم"
+autocomplete="username">
 
-<input type="password" id="registerPassword" placeholder="كلمة المرور">
+<input
+type="password"
+id="registerPassword"
+placeholder="كلمة المرور"
+autocomplete="new-password">
 
-<input type="text" id="registerReferral" placeholder="رمز الدعوة">
+<input
+type="text"
+id="registerReferral"
+placeholder="رمز الدعوة">
 
 <div class="captcha-box">
 
-<div class="captcha" id="captcha">00000</div>
-<button class="refresh" onclick="generateCaptcha()">↻</button>
+<div class="captcha" id="captcha">
+00000
+</div>
+
+<button
+type="button"
+class="refresh"
+onclick="generateCaptcha()">
+↻
+</button>
 
 </div>
 
-<input type="text" id="captchaInput" placeholder="رمز التحقق" inputmode="numeric">
+<input
+type="text"
+id="captchaInput"
+placeholder="رمز التحقق"
+inputmode="numeric">
 
-<button onclick="register()">إنشاء حساب</button>
+<button onclick="register()">
+إنشاء حساب
+</button>
 
 <button class="secondary" onclick="showLogin()">
 لدي حساب بالفعل
@@ -327,7 +380,10 @@ margin-top:12px
 
 <h2>إعادة كلمة المرور</h2>
 
-<input type="email" id="resetEmail" placeholder="البريد الإلكتروني">
+<input
+type="email"
+id="resetEmail"
+placeholder="البريد الإلكتروني">
 
 <button onclick="resetPassword()">
 إرسال رابط إعادة التعيين
@@ -357,7 +413,10 @@ margin-top:12px
 <strong id="homeUsername">-</strong>
 </p>
 
-<button id="adminButton" class="admin-button hidden" onclick="showAdmin()">
+<button
+id="adminButton"
+class="admin-button hidden"
+onclick="showAdmin()">
 ⚙️ لوحة الإدارة
 </button>
 
@@ -446,7 +505,9 @@ margin-top:12px
 الرصيد الحالي
 </p>
 
-<button onclick="showDeposit()">إيداع</button>
+<button onclick="showDeposit()">
+إيداع
+</button>
 
 <button class="secondary" onclick="showWithdraw()">
 سحب
@@ -467,9 +528,13 @@ margin-top:12px
 
 <select id="network" onchange="updateNetwork()">
 
-<option value="TRC20">TRC20</option>
+<option value="TRC20">
+TRC20
+</option>
 
-<option value="BEP20">BEP20</option>
+<option value="BEP20">
+BEP20
+</option>
 
 </select>
 
@@ -558,6 +623,7 @@ type="text"
 id="withdrawWallet"
 class="ltr"
 placeholder="عنوان محفظتك">
+
 <div class="withdraw-info">
 ⚠️ تأكد من اختيار الشبكة الصحيحة وكتابة عنوان المحفظة بشكل صحيح.
 </div>
@@ -645,24 +711,44 @@ placeholder="عنوان محفظتك">
 
 <div class="nav-inner">
 
-<button class="nav-btn active" id="homeNav" onclick="showHome()">
+<button
+class="nav-btn active"
+id="homeNav"
+onclick="showHome()">
+
 <span>🏠</span>
 الرئيسية
+
 </button>
 
-<button class="nav-btn" id="infoNav" onclick="showInfo()">
+<button
+class="nav-btn"
+id="infoNav"
+onclick="showInfo()">
+
 <span>👤</span>
 معلوماتي
+
 </button>
 
-<button class="nav-btn" id="treeNav" onclick="showTree()">
+<button
+class="nav-btn"
+id="treeNav"
+onclick="showTree()">
+
 <span>🌳</span>
 الشجرة
+
 </button>
 
-<button class="nav-btn" id="walletNav" onclick="showWallet()">
+<button
+class="nav-btn"
+id="walletNav"
+onclick="showWallet()">
+
 <span>💰</span>
 المحفظة
+
 </button>
 
 </div>
@@ -670,6 +756,8 @@ placeholder="عنوان محفظتك">
 
 </div>
 
+
+<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -687,7 +775,9 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
+
 let captchaCode = "";
+
 
 const wallets = {
 
@@ -700,7 +790,44 @@ BEP20:
 };
 
 
-/* الصفحات */
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHTML(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function getStatusText(status){
+
+if(status === "pending"){
+return "قيد المراجعة";
+}
+
+if(status === "approved"){
+return "مقبول";
+}
+
+if(status === "rejected"){
+return "مرفوض";
+}
+
+return status || "-";
+
+}
+
+
+/* =========================
+   PAGES
+========================= */
 
 function hidePages(){
 
@@ -745,9 +872,12 @@ btn.classList.remove("active");
 
 if(id){
 
-document
-.getElementById(id)
-.classList.add("active");
+const button =
+document.getElementById(id);
+
+if(button){
+button.classList.add("active");
+}
 
 }
 
@@ -875,6 +1005,8 @@ document
 .getElementById("registerPage")
 .classList.remove("hidden");
 
+generateCaptcha();
+
 }
 
 
@@ -891,39 +1023,51 @@ document
 }
 
 
-/* CAPTCHA */
+/* =========================
+   CAPTCHA
+========================= */
 
 function generateCaptcha(){
-  captchaCode =
+
+captchaCode =
 Math.floor(
 10000 + Math.random() * 90000
 ).toString();
 
-document
-.getElementById("captcha")
-.textContent =
-captchaCode;
+const captcha =
+document.getElementById("captcha");
 
-document
-.getElementById("captchaInput")
-.value = "";
+if(captcha){
+captcha.textContent = captchaCode;
+}
+
+const input =
+document.getElementById("captchaInput");
+
+if(input){
+input.value = "";
+}
 
 }
 
 
-/* REGISTER */
+/* =========================
+   REGISTER
+========================= */
 
 async function register(){
 
 const email =
 document
 .getElementById("registerEmail")
-.value.trim();
+.value
+.trim();
 
 const username =
 document
 .getElementById("registerUsername")
-.value.trim();
+.value
+.trim();
 
 const password =
 document
@@ -940,7 +1084,8 @@ document
 const captchaInput =
 document
 .getElementById("captchaInput")
-.value.trim();
+.value
+.trim();
 
 const message =
 document
@@ -984,12 +1129,28 @@ return;
 }
 
 
+if(username.length < 3){
+
+message.textContent =
+"اسم المستخدم يجب أن يكون 3 أحرف على الأقل";
+
+return;
+
+}
+
+
+message.textContent =
+"جاري إنشاء الحساب...";
+
+
+try{
+
 let referrerId = null;
 
 
 if(referral){
 
-const result =
+const refResult =
 await supabaseClient.rpc(
 "find_referrer",
 {
@@ -998,17 +1159,18 @@ ref_code:referral
 );
 
 
-if(result.error){
+if(refResult.error){
 
 message.textContent =
-"حدث خطأ في التحقق من رمز الدعوة";
+"حدث خطأ في التحقق من رمز الدعوة: " +
+refResult.error.message;
 
 return;
 
 }
 
 
-if(!result.data){
+if(!refResult.data){
 
 message.textContent =
 "رمز الدعوة غير صحيح ❌";
@@ -1019,7 +1181,7 @@ return;
 
 
 referrerId =
-result.data;
+refResult.data;
 
 }
 
@@ -1061,6 +1223,12 @@ return;
 }
 
 
+/*
+إذا كان عندك Trigger في Supabase
+ينشئ profile تلقائيًا، قد يكون الإدخال
+التالي مكررًا. الكود يتعامل مع الحالة.
+*/
+
 const profileResult =
 await supabaseClient
 .from("profiles")
@@ -1077,6 +1245,17 @@ referred_by:referrerId
 
 if(profileResult.error){
 
+/*
+إذا كان السبب أن profile موجود أصلًا،
+لا نعتبر إنشاء الحساب فاشلًا بالكامل.
+*/
+
+if(
+!profileResult.error.message
+.toLowerCase()
+.includes("duplicate")
+){
+
 message.textContent =
 "تم إنشاء الحساب، لكن حدث خطأ في حفظ البيانات: " +
 profileResult.error.message;
@@ -1085,23 +1264,49 @@ return;
 
 }
 
+}
+
+
+if(result.data.session){
 
 message.textContent =
 "تم إنشاء الحساب بنجاح ✅";
+
+await loadProfile(
+result.data.user.id
+);
+
+}else{
+
+message.textContent =
+"تم إنشاء الحساب بنجاح ✅ إذا كان تأكيد البريد مفعّلًا، افحص بريدك الإلكتروني.";
 
 generateCaptcha();
 
 }
 
+}catch(error){
 
-/* LOGIN */
+message.textContent =
+"حدث خطأ: " +
+error.message;
+
+}
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
 
 async function login(){
 
 const email =
 document
 .getElementById("loginEmail")
-.value.trim();
+.value
+.trim();
 
 const password =
 document
@@ -1150,6 +1355,18 @@ return;
 }
 
 
+if(
+!result.data.user
+){
+
+message.textContent =
+"تعذر تسجيل الدخول";
+
+return;
+
+}
+
+
 await loadProfile(
 result.data.user.id
 );
@@ -1166,7 +1383,9 @@ error.message;
 }
 
 
-/* PROFILE */
+/* =========================
+   PROFILE
+========================= */
 
 async function loadProfile(userId){
 
@@ -1176,7 +1395,10 @@ await supabaseClient
 .select(
 "username,referral_code,is_admin,balance"
 )
-.eq("id",userId)
+.eq(
+"id",
+userId
+)
 .single();
 
 
@@ -1247,12 +1469,21 @@ const link =
 window.location.origin +
 window.location.pathname +
 "?ref=" +
-result.data.referral_code;
+encodeURIComponent(
+result.data.referral_code
+);
 
 document
 .getElementById("infoReferralLink")
 .textContent =
 link;
+
+}else{
+
+document
+.getElementById("infoReferralLink")
+.textContent =
+"-";
 
 }
 
@@ -1277,8 +1508,11 @@ showHome();
 }
 
 
-/* BALANCE */
-  async function loadBalance(){
+/* =========================
+   BALANCE
+========================= */
+
+async function loadBalance(){
 
 const session =
 await supabaseClient.auth.getSession();
@@ -1358,7 +1592,53 @@ Number(result.data.balance || 0)
 }
 
 
-/* COPY */
+/* =========================
+   COPY
+========================= */
+
+async function copyText(text){
+
+try{
+
+if(
+navigator.clipboard &&
+window.isSecureContext
+){
+
+await navigator.clipboard.writeText(text);
+
+return true;
+
+}
+
+const textarea =
+document.createElement("textarea");
+
+textarea.value = text;
+
+textarea.style.position = "fixed";
+textarea.style.opacity = "0";
+
+document.body.appendChild(textarea);
+
+textarea.focus();
+textarea.select();
+
+const success =
+document.execCommand("copy");
+
+textarea.remove();
+
+return success;
+
+}catch(error){
+
+return false;
+
+}
+
+}
+
 
 async function copyReferralLink(){
 
@@ -1377,13 +1657,15 @@ return;
 }
 
 
-try{
+const success =
+await copyText(link);
 
-await navigator.clipboard.writeText(link);
+
+if(success){
 
 alert("تم نسخ رابط الدعوة ✅");
 
-}catch{
+}else{
 
 alert("تعذر النسخ");
 
@@ -1402,7 +1684,7 @@ document
 document
 .getElementById("walletAddress")
 .textContent =
-wallets[network];
+wallets[network] || "";
 
 }
 
@@ -1414,13 +1696,15 @@ document
 .getElementById("walletAddress")
 .textContent;
 
-try{
+const success =
+await copyText(address);
 
-await navigator.clipboard.writeText(address);
+
+if(success){
 
 alert("تم نسخ العنوان ✅");
 
-}catch{
+}else{
 
 alert("تعذر النسخ");
 
@@ -1429,7 +1713,9 @@ alert("تعذر النسخ");
 }
 
 
-/* DEPOSIT */
+/* =========================
+   DEPOSIT
+========================= */
 
 async function submitDeposit(){
 
@@ -1452,13 +1738,19 @@ document
 .value;
 
 
-const file =
+const fileInput =
 document
-.getElementById("depositProof")
-.files[0];
+.getElementById("depositProof");
 
 
-if(!amount || amount <= 0){
+const file =
+fileInput.files[0];
+
+
+if(
+isNaN(amount) ||
+amount <= 0
+){
 
 message.textContent =
 "اكتب مبلغًا صحيحًا";
@@ -1522,6 +1814,8 @@ session.data.session.user;
 message.textContent =
 "جاري إرسال الطلب...";
 
+
+try{
 
 const safeName =
 file.name.replace(
@@ -1595,18 +1889,31 @@ return;
 message.textContent =
 "تم إرسال طلب الإيداع بنجاح ✅ وسيتم مراجعته.";
 
+
 document
 .getElementById("depositAmount")
 .value = "";
+
 
 document
 .getElementById("depositProof")
 .value = "";
 
+
+}catch(error){
+
+message.textContent =
+"حدث خطأ: " +
+error.message;
+
+}
+
 }
 
 
-/* WITHDRAW */
+/* =========================
+   WITHDRAW
+========================= */
 
 async function submitWithdraw(){
 
@@ -1636,7 +1943,10 @@ document
 .trim();
 
 
-if(!amount || amount <= 0){
+if(
+isNaN(amount) ||
+amount <= 0
+){
 
 message.textContent =
 "اكتب مبلغ سحب صحيح";
@@ -1677,7 +1987,8 @@ if(
 
 message.textContent =
 "يجب تسجيل الدخول أولًا";
-  return;
+
+return;
 
 }
 
@@ -1685,6 +1996,8 @@ message.textContent =
 message.textContent =
 "جاري إرسال طلب السحب...";
 
+
+try{
 
 const result =
 await supabaseClient.rpc(
@@ -1711,20 +2024,34 @@ return;
 message.textContent =
 "تم إرسال طلب السحب بنجاح ✅";
 
+
 document
 .getElementById("withdrawAmount")
 .value = "";
+
 
 document
 .getElementById("withdrawWallet")
 .value = "";
 
+
 await loadWithdrawBalance();
+
+
+}catch(error){
+
+message.textContent =
+"حدث خطأ: " +
+error.message;
+
+}
 
 }
 
 
-/* TREE */
+/* =========================
+   TREE
+========================= */
 
 async function loadTree(){
 
@@ -1738,6 +2065,24 @@ if(result.error){
 
 document
 .getElementById("level1")
+.textContent =
+"حدث خطأ في تحميل الشجرة";
+
+
+document
+.getElementById("level2")
+.textContent =
+"حدث خطأ في تحميل الشجرة";
+
+
+document
+.getElementById("level3")
+.textContent =
+"حدث خطأ في تحميل الشجرة";
+
+
+document
+.getElementById("levelOther")
 .textContent =
 "حدث خطأ في تحميل الشجرة";
 
@@ -1757,24 +2102,33 @@ other:[]
 (result.data || [])
 .forEach(function(user){
 
-if(user.level === 1){
+const level =
+Number(user.level);
 
-levels[1].push(user.username);
+const username =
+escapeHTML(
+user.username || "بدون اسم"
+);
 
-}else if(user.level === 2){
 
-levels[2].push(user.username);
+if(level === 1){
 
-}else if(user.level === 3){
+levels[1].push(username);
 
-levels[3].push(user.username);
+}else if(level === 2){
+
+levels[2].push(username);
+
+}else if(level === 3){
+
+levels[3].push(username);
 
 }else{
 
 levels.other.push(
-user.username +
+username +
 " — المستوى " +
-user.level
+escapeHTML(level)
 );
 
 }
@@ -1816,7 +2170,9 @@ levels.other.join("<br>") :
 }
 
 
-/* RESET */
+/* =========================
+   RESET PASSWORD
+========================= */
 
 async function resetPassword(){
 
@@ -1841,11 +2197,19 @@ return;
 }
 
 
+message.textContent =
+"جاري إرسال الرابط...";
+
+
+try{
+
 const result =
 await supabaseClient.auth.resetPasswordForEmail(
 email,
 {
-redirectTo:window.location.href
+redirectTo:
+window.location.origin +
+window.location.pathname
 }
 );
 
@@ -1864,10 +2228,20 @@ return;
 message.textContent =
 "تم إرسال رابط إعادة التعيين ✅";
 
+}catch(error){
+
+message.textContent =
+"حدث خطأ: " +
+error.message;
+
+}
+
 }
 
 
-/* ADMIN */
+/* =========================
+   ADMIN CHECK
+========================= */
 
 async function checkAdmin(){
 
@@ -1896,11 +2270,21 @@ session.data.session.user.id
 .single();
 
 
-return !result.error &&
-result.data.is_admin === true;
+if(result.error){
+
+return false;
 
 }
 
+
+return result.data.is_admin === true;
+
+}
+
+
+/* =========================
+   ADMIN
+========================= */
 
 async function showAdmin(){
 
@@ -1932,8 +2316,6 @@ showAdminMenu();
 }
 
 
-/* ADMIN MENU */
-
 function showAdminMenu(){
 
 document
@@ -1947,6 +2329,10 @@ document
 document
 .getElementById("adminWithdrawalsSection")
 .classList.add("hidden");
+
+document
+.getElementById("adminMessage")
+.textContent = "";
 
 }
 
@@ -1989,7 +2375,9 @@ await loadAdminWithdrawals();
 }
 
 
-/* ADMIN DEPOSITS */
+/* =========================
+   ADMIN DEPOSITS
+========================= */
 
 async function loadAdminDeposits(){
 
@@ -2018,7 +2406,7 @@ return;
 
 
 message.textContent =
-"جاري تحميل الطلبات...";
+"جاري تحميل طلبات الإيداع...";
 
 
 const result =
@@ -2036,365 +2424,23 @@ ascending:false
 
 
 if(result.error){
-  message.textContent =
-"فشل تحميل طلبات الإيداع: " +
-result.error.message;
 
-return;
-
-}
-
-
-if(!result.data || !result.data.length){
-
-container.innerHTML =
-"<p>لا توجد طلبات إيداع.</p>";
-
-message.textContent = "";
-
-return;
-
-}
-
-
-container.innerHTML = "";
-
-
-for(const request of result.data){
-
-let username =
-"غير معروف";
-
-
-const userResult =
-await supabaseClient
-.from("profiles")
-.select("username")
-.eq(
-"id",
-request.user_id
-)
-.single();
-
-
-if(!userResult.error){
-
-username =
-userResult.data.username ||
-"غير معروف";
-
-}
-
-
-const card =
-document.createElement("div");
-
-card.className =
-"deposit-card";
-
-
-let proofHTML = "";
-
-
-if(request.proof_url){
-
-const signedResult =
-await supabaseClient
-.storage
-.from("deposit-proofs")
-.createSignedUrl(
-request.proof_url,
-3600
-);
-
-
-if(
-!signedResult.error &&
-signedResult.data &&
-signedResult.data.signedUrl
-){
-
-const url =
-signedResult.data.signedUrl
-.replace(/'/g,"%27");
-
-
-proofHTML =
-
-<img
-src="${url}"
-alt="إثبات التحويل"
-onclick="window.open('${url}','_blank')"
-style="cursor:pointer">
-;
-
-}else{
-
-proofHTML =
-"<p>❌ تعذر فتح صورة الإثبات</p>";
-
-}
-
-}
-
-
-let statusText =
-request.status;
-
-
-if(request.status === "pending"){
-statusText = "قيد المراجعة";
-}
-
-if(request.status === "approved"){
-statusText = "مقبول";
-}
-
-if(request.status === "rejected"){
-statusText = "مرفوض";
-}
-
-
-let buttons = "";
-
-
-if(request.status === "pending"){
-
-buttons =
-
-<button
-class="success"
-onclick="approveDeposit('${request.id}')">
-قبول ✅
-</button>
-
-<button
-class="danger"
-onclick="rejectDeposit('${request.id}')">
-رفض ❌
-</button>
-;
-
-}
-
-
-card.innerHTML =
-
-<strong>المستخدم:</strong>
-${escapeHTML(username)}
-<br>
-
-<strong>المبلغ:</strong>
-${Number(request.amount).toFixed(2)}
-USDT
-<br>
-
-<strong>الشبكة:</strong>
-${escapeHTML(request.network || "-")}
-<br>
-
-<strong>التاريخ:</strong>
-${new Date(
-request.created_at
-).toLocaleString()}
-<br>
-
-<span class="status ${escapeHTML(request.status)}">
-${statusText}
-</span>
-
-${proofHTML}
-
-<div class="deposit-actions">
-${buttons}
-</div>
-;
-
-
-container.appendChild(card);
-
-}
-
-
-message.textContent = "";
-
-}
-
-
-/* ADMIN WITHDRAWALS */
-
-async function loadAdminWithdrawals(){
-
-const container =
-document
-.getElementById("adminWithdrawals");
-
-
-const admin =
-await checkAdmin();
-
-
-if(!admin){
-
-container.innerHTML =
-"<p>غير مصرح لك بالدخول.</p>";
-
-return;
-
-}
-
-
-const result =
-await supabaseClient
-.from("withdraw_requests")
-.select(
-"id,user_id,amount,network,wallet_address,status,created_at"
-)
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-
-if(result.error){
-
-container.innerHTML =
-"<p>فشل تحميل طلبات السحب: " +
-escapeHTML(result.error.message) +
-"</p>";
-
-return;
-
-}
-
-
-if(!result.data || !result.data.length){
-
-container.innerHTML =
-"<p>لا توجد طلبات سحب.</p>";
-
-return;
-
-}
-
-
-container.innerHTML = "";
-
-
-for(const request of result.data){
-
-let username =
-"غير معروف";
-
-
-const userResult =
-await supabaseClient
-.from("profiles")
-.select("username")
-.eq(
-"id",
-request.user_id
-)
-.single();
-
-
-if(!userResult.error){
-
-username =
-userResult.data.username ||
-"غير معروف";
-
-}
-
-
-let statusText =
-request.status;
-
-
-if(request.status === "pending"){
-statusText = "قيد المراجعة";
-}
-
-if(request.status === "approved"){
-statusText = "تم التنفيذ";
-}
-
-if(request.status === "rejected"){
-statusText = "مرفوض";
-}
-
-
-let buttons = "";
-
-
-if(request.status === "pending"){
-
-buttons =
-
-<div class="deposit-actions">
-
-<button
-class="success"
-onclick="approveWithdrawal('${escapeHTML(request.id)}')">
-تم التحويل ✅
-</button>
-
-<button
-class="danger"
-onclick="rejectWithdrawal('${escapeHTML(request.id)}')">
-رفض ❌
-</button>
-
-</div>
-;
-
-}
-
-
-const card =
-document.createElement("div");
-
-card.className =
-"withdraw-card";
-
-
-card.innerHTML =
-`
-<strong>المستخدم:</strong>
-${escapeHTML(username)}
-<br>
-
-<strong>المبلغ:</strong>
-${Number(request.amount).toFixed(2)}
-USDT
-<br>
-
-<strong>الشبكة:</strong>
-${escapeHTML(request.network || "-")}
-<br>
-
-<strong>عنوان المحفظة:</strong>
-
-<div class="address">
-${escapeHTML(request.wallet_address)}
-</div>
-
-<strong>التاريخ:</strong>
-${new Date(
-request.created_at
-).toLocaleString()}
 message.textContent =
 "فشل تحميل طلبات الإيداع: " +
 result.error.message;
 
+container.innerHTML =
+"<p>تعذر تحميل الطلبات.</p>";
+
 return;
 
 }
 
 
-if(!result.data || !result.data.length){
+if(
+!result.data ||
+!result.data.length
+){
 
 container.innerHTML =
 "<p>لا توجد طلبات إيداع.</p>";
@@ -2464,18 +2510,16 @@ signedResult.data.signedUrl
 ){
 
 const url =
-signedResult.data.signedUrl
-.replace(/'/g,"%27");
+signedResult.data.signedUrl;
 
 
-proofHTML =
-
+proofHTML = `
 <img
-src="${url}"
+src="${escapeHTML(url)}"
 alt="إثبات التحويل"
-onclick="window.open('${url}','_blank')"
+onclick="window.open(this.src,'_blank')"
 style="cursor:pointer">
-;
+`;
 
 }else{
 
@@ -2487,21 +2531,10 @@ proofHTML =
 }
 
 
-let statusText =
-request.status;
-
-
-if(request.status === "pending"){
-statusText = "قيد المراجعة";
-}
-
-if(request.status === "approved"){
-statusText = "مقبول";
-}
-
-if(request.status === "rejected"){
-statusText = "مرفوض";
-}
+const statusText =
+getStatusText(
+request.status
+);
 
 
 let buttons = "";
@@ -2509,32 +2542,38 @@ let buttons = "";
 
 if(request.status === "pending"){
 
-buttons =
+const safeId =
+escapeHTML(request.id);
+
+
+buttons = `
+<div class="deposit-actions">
 
 <button
 class="success"
-onclick="approveDeposit('${request.id}')">
+onclick="approveDeposit('${safeId}')">
 قبول ✅
 </button>
 
 <button
 class="danger"
-onclick="rejectDeposit('${request.id}')">
+onclick="rejectDeposit('${safeId}')">
 رفض ❌
 </button>
-;
+
+</div>
+`;
 
 }
 
 
-card.innerHTML =
-
+card.innerHTML = `
 <strong>المستخدم:</strong>
 ${escapeHTML(username)}
 <br>
 
 <strong>المبلغ:</strong>
-${Number(request.amount).toFixed(2)}
+${Number(request.amount || 0).toFixed(2)}
 USDT
 <br>
 
@@ -2543,21 +2582,21 @@ ${escapeHTML(request.network || "-")}
 <br>
 
 <strong>التاريخ:</strong>
-${new Date(
+${escapeHTML(
+new Date(
 request.created_at
-).toLocaleString()}
+).toLocaleString()
+)}
 <br>
 
 <span class="status ${escapeHTML(request.status)}">
-${statusText}
+${escapeHTML(statusText)}
 </span>
 
 ${proofHTML}
 
-<div class="deposit-actions">
 ${buttons}
-</div>
-;
+`;
 
 
 container.appendChild(card);
@@ -2570,7 +2609,9 @@ message.textContent = "";
 }
 
 
-/* ADMIN WITHDRAWALS */
+/* =========================
+   ADMIN WITHDRAWALS
+========================= */
 
 async function loadAdminWithdrawals(){
 
@@ -2619,7 +2660,10 @@ return;
 }
 
 
-if(!result.data || !result.data.length){
+if(
+!result.data ||
+!result.data.length
+){
 
 container.innerHTML =
 "<p>لا توجد طلبات سحب.</p>";
@@ -2680,24 +2724,27 @@ let buttons = "";
 
 if(request.status === "pending"){
 
-buttons =
+const safeId =
+escapeHTML(request.id);
 
+
+buttons = `
 <div class="deposit-actions">
 
 <button
 class="success"
-onclick="approveWithdrawal('${escapeHTML(request.id)}')">
+onclick="approveWithdrawal('${safeId}')">
 تم التحويل ✅
 </button>
 
 <button
 class="danger"
-onclick="rejectWithdrawal('${escapeHTML(request.id)}')">
+onclick="rejectWithdrawal('${safeId}')">
 رفض ❌
 </button>
 
 </div>
-;
+`;
 
 }
 
@@ -2709,14 +2756,13 @@ card.className =
 "withdraw-card";
 
 
-card.innerHTML =
-`
+card.innerHTML = `
 <strong>المستخدم:</strong>
 ${escapeHTML(username)}
 <br>
 
 <strong>المبلغ:</strong>
-${Number(request.amount).toFixed(2)}
+${Number(request.amount || 0).toFixed(2)}
 USDT
 <br>
 
@@ -2727,21 +2773,25 @@ ${escapeHTML(request.network || "-")}
 <strong>عنوان المحفظة:</strong>
 
 <div class="address">
-${escapeHTML(request.wallet_address)}
+${escapeHTML(request.wallet_address || "-")}
 </div>
 
 <strong>التاريخ:</strong>
-${new Date(
+${escapeHTML(
+new Date(
 request.created_at
-).toLocaleString()}
+).toLocaleString()
+)}
 <br>
-  <span class="status ${escapeHTML(request.status)}">
-${statusText}
+
+<span class="status ${escapeHTML(request.status)}">
+${escapeHTML(statusText)}
 </span>
 
 ${buttons}
 `;
 
+
 container.appendChild(card);
 
 }
@@ -2749,9 +2799,20 @@ container.appendChild(card);
 }
 
 
-/* APPROVE DEPOSIT */
+/* =========================
+   APPROVE DEPOSIT
+========================= */
 
 async function approveDeposit(id){
+
+if(!id){
+
+alert("رقم طلب الإيداع غير موجود.");
+
+return;
+
+}
+
 
 if(!confirm(
 "هل تريد قبول هذا الإيداع وإضافة المبلغ إلى رصيد المستخدم؟"
@@ -2793,9 +2854,20 @@ await loadAdminDeposits();
 }
 
 
-/* REJECT DEPOSIT */
+/* =========================
+   REJECT DEPOSIT
+========================= */
 
 async function rejectDeposit(id){
+
+if(!id){
+
+alert("رقم طلب الإيداع غير موجود.");
+
+return;
+
+}
+
 
 if(!confirm(
 "هل تريد رفض هذا الإيداع؟"
@@ -2827,7 +2899,9 @@ return;
 }
 
 
-alert("تم رفض الإيداع ❌");
+alert(
+"تم رفض الإيداع ❌"
+);
 
 
 await loadAdminDeposits();
@@ -2835,18 +2909,17 @@ await loadAdminDeposits();
 }
 
 
-/* APPROVE WITHDRAWAL */
+/* =========================
+   APPROVE WITHDRAWAL
+========================= */
 
 async function approveWithdrawal(id){
 
-/*
-  لا تستخدم Number(id) هنا.
-  الـ id يمكن أن يكون UUID أو قيمة نصية.
-*/
-
 if(!id){
 
-alert("رقم طلب السحب غير موجود.");
+alert(
+"رقم طلب السحب غير موجود."
+);
 
 return;
 
@@ -2876,7 +2949,9 @@ id
 "status",
 "pending"
 )
-.select("id,status");
+.select(
+"id,status"
+);
 
 
 if(result.error){
@@ -2891,7 +2966,10 @@ return;
 }
 
 
-if(!result.data || result.data.length === 0){
+if(
+!result.data ||
+result.data.length === 0
+){
 
 alert(
 "لم يتم تحديث الطلب. قد يكون الطلب غير موجود أو تمت معالجته مسبقًا."
@@ -2912,17 +2990,17 @@ await loadAdminWithdrawals();
 }
 
 
-/* REJECT WITHDRAWAL */
+/* =========================
+   REJECT WITHDRAWAL
+========================= */
 
 async function rejectWithdrawal(id){
 
-/*
-  لا تستخدم Number(id) هنا أيضًا.
-*/
-
 if(!id){
 
-alert("رقم طلب السحب غير موجود.");
+alert(
+"رقم طلب السحب غير موجود."
+);
 
 return;
 
@@ -2969,21 +3047,9 @@ await loadAdminWithdrawals();
 }
 
 
-/* ESCAPE */
-
-function escapeHTML(value){
-
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-/* REFERRAL */
+/* =========================
+   REFERRAL URL
+========================= */
 
 function loadReferralFromURL(){
 
@@ -3008,7 +3074,9 @@ ref.toUpperCase();
 }
 
 
-/* SESSION */
+/* =========================
+   SESSION
+========================= */
 
 async function checkSession(){
 
@@ -3035,6 +3103,11 @@ showLogin();
 
 }catch(error){
 
+console.error(
+"Session error:",
+error
+);
+
 showLogin();
 
 }
@@ -3042,7 +3115,27 @@ showLogin();
 }
 
 
-/* START */
+/* =========================
+   AUTH STATE
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+function(event, session){
+
+if(
+event === "SIGNED_OUT"
+){
+
+showLogin();
+
+}
+
+});
+
+
+/* =========================
+   START
+========================= */
 
 generateCaptcha();
 
@@ -3053,5 +3146,4 @@ checkSession();
 </script>
 
 </body>
-</html>
-<br>
+  </html>
