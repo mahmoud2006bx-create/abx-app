@@ -1,0 +1,3057 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ABX</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+color:#111;
+padding-bottom:80px
+}
+
+.app{
+max-width:500px;
+min-height:100vh;
+margin:auto;
+background:#fff
+}
+
+.header{
+padding:18px 20px;
+border-bottom:1px solid #eee;
+font-size:24px;
+font-weight:bold
+}
+
+.page{padding:20px}
+
+.card{
+background:#fff;
+border-radius:16px;
+padding:20px;
+box-shadow:0 2px 12px rgba(0,0,0,.07)
+}
+
+h2{margin-top:0}
+
+input,select,button{
+width:100%;
+padding:14px;
+margin-top:12px;
+border-radius:10px;
+border:1px solid #ddd;
+font-size:16px
+}
+
+button{
+background:#111;
+color:#fff;
+border:0;
+font-weight:bold;
+cursor:pointer
+}
+
+.secondary{
+background:#eee;
+color:#111
+}
+
+.danger{
+background:#b00020;
+color:#fff
+}
+
+.success{
+background:#087f23;
+color:#fff
+}
+
+.linkButton{
+background:transparent;
+color:#111;
+text-decoration:underline
+}
+
+.hidden{display:none!important}
+
+.message{
+text-align:center;
+margin-top:15px;
+min-height:20px
+}
+
+.captcha-box{
+display:flex;
+gap:8px;
+align-items:center;
+margin-top:12px
+}
+
+.captcha{
+flex:1;
+background:#eee;
+padding:14px;
+border-radius:10px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+letter-spacing:5px
+}
+
+.refresh{
+width:55px;
+margin-top:0;
+background:#eee;
+color:#111
+}
+
+.info-row,.tree-level,.network-box,.deposit-card,.withdraw-card{
+background:#f5f5f5;
+padding:15px;
+border-radius:12px;
+margin-top:12px
+}
+
+.info-title{
+color:#777;
+font-size:13px;
+margin-bottom:5px
+}
+
+.info-value{
+font-size:16px;
+word-break:break-word
+}
+
+.ltr,.address{
+direction:ltr;
+text-align:left
+}
+
+.wallet-balance{
+text-align:center;
+font-size:32px;
+font-weight:bold;
+padding:20px 0
+}
+
+.address{
+word-break:break-all;
+background:#fff;
+padding:12px;
+border-radius:8px;
+margin-top:8px;
+font-size:14px
+}
+
+.file-box{margin-top:15px}
+
+.deposit-card img{
+width:100%;
+max-height:350px;
+object-fit:contain;
+border-radius:10px;
+margin-top:10px;
+background:#fff
+}
+
+.deposit-actions{
+display:flex;
+gap:8px
+}
+
+.deposit-actions button{
+flex:1
+}
+
+.status{
+display:inline-block;
+padding:6px 10px;
+border-radius:8px;
+font-size:13px;
+margin-top:8px
+}
+
+.pending{
+background:#fff0c2
+}
+
+.approved{
+background:#d8f5df
+}
+
+.rejected{
+background:#ffd9dd
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:70px;
+background:#fff;
+border-top:1px solid #ddd;
+display:flex;
+justify-content:center;
+z-index:1000
+}
+
+.nav-inner{
+width:100%;
+max-width:500px;
+display:flex;
+justify-content:space-around
+}
+
+.nav-btn{
+flex:1;
+background:#fff;
+color:#777;
+border-radius:0;
+margin:0;
+padding:8px 2px;
+font-size:12px
+}
+
+.nav-btn span{
+display:block;
+font-size:23px;
+margin-bottom:3px
+}
+
+.nav-btn.active{
+color:#111;
+font-weight:bold
+}
+
+.admin-button{
+margin-top:12px;
+background:#111
+}
+
+.withdraw-info{
+background:#fff3cd;
+padding:12px;
+border-radius:10px;
+margin-top:12px;
+font-size:14px
+}
+
+.admin-menu button{
+margin-top:12px
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">ABX</div>
+
+<!-- LOGIN -->
+
+<div class="page" id="loginPage">
+<div class="card">
+
+<h2>تسجيل الدخول</h2>
+
+<input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+
+<input type="password" id="loginPassword" placeholder="كلمة المرور">
+
+<button onclick="login()">تسجيل الدخول</button>
+
+<button class="linkButton" onclick="showReset()">
+نسيت كلمة المرور؟
+</button>
+
+<button class="secondary" onclick="showRegister()">
+إنشاء حساب جديد
+</button>
+
+<div class="message" id="loginMessage"></div>
+
+</div>
+</div>
+
+
+<!-- REGISTER -->
+
+<div class="page hidden" id="registerPage">
+<div class="card">
+
+<h2>إنشاء حساب</h2>
+
+<input type="email" id="registerEmail" placeholder="البريد الإلكتروني">
+
+<input type="text" id="registerUsername" placeholder="اسم المستخدم">
+
+<input type="password" id="registerPassword" placeholder="كلمة المرور">
+
+<input type="text" id="registerReferral" placeholder="رمز الدعوة">
+
+<div class="captcha-box">
+
+<div class="captcha" id="captcha">00000</div>
+<button class="refresh" onclick="generateCaptcha()">↻</button>
+
+</div>
+
+<input type="text" id="captchaInput" placeholder="رمز التحقق" inputmode="numeric">
+
+<button onclick="register()">إنشاء حساب</button>
+
+<button class="secondary" onclick="showLogin()">
+لدي حساب بالفعل
+</button>
+
+<div class="message" id="registerMessage"></div>
+
+</div>
+</div>
+
+
+<!-- RESET -->
+
+<div class="page hidden" id="resetPage">
+<div class="card">
+
+<h2>إعادة كلمة المرور</h2>
+
+<input type="email" id="resetEmail" placeholder="البريد الإلكتروني">
+
+<button onclick="resetPassword()">
+إرسال رابط إعادة التعيين
+</button>
+
+<button class="secondary" onclick="showLogin()">
+العودة
+</button>
+
+<div class="message" id="resetMessage"></div>
+
+</div>
+</div>
+
+
+<!-- HOME -->
+
+<div class="page hidden" id="homePage">
+<div class="card">
+
+<h2>مرحبًا 👋</h2>
+
+<p>أهلًا بك في حسابك.</p>
+
+<p>
+اسم المستخدم:
+<strong id="homeUsername">-</strong>
+</p>
+
+<button id="adminButton" class="admin-button hidden" onclick="showAdmin()">
+⚙️ لوحة الإدارة
+</button>
+
+</div>
+</div>
+
+
+<!-- INFO -->
+
+<div class="page hidden" id="infoPage">
+<div class="card">
+
+<h2>👤 معلوماتي</h2>
+
+<div class="info-row">
+<div class="info-title">اسم المستخدم</div>
+<div class="info-value" id="infoUsername">-</div>
+</div>
+
+<div class="info-row">
+<div class="info-title">البريد الإلكتروني</div>
+<div class="info-value" id="infoEmail">-</div>
+</div>
+
+<div class="info-row">
+<div class="info-title">كود الدعوة</div>
+<div class="info-value" id="infoReferralCode">-</div>
+</div>
+
+<div class="info-row">
+<div class="info-title">رابط الدعوة</div>
+<div class="info-value ltr" id="infoReferralLink">-</div>
+</div>
+
+<button onclick="copyReferralLink()">
+نسخ رابط الدعوة
+</button>
+
+</div>
+</div>
+
+
+<!-- TREE -->
+
+<div class="page hidden" id="treePage">
+<div class="card">
+
+<h2>🌳 شجرة الإحالات</h2>
+
+<div class="tree-level">
+<strong>المستوى الأول</strong>
+<div id="level1">جاري التحميل...</div>
+</div>
+
+<div class="tree-level">
+<strong>المستوى الثاني</strong>
+<div id="level2">جاري التحميل...</div>
+</div>
+
+<div class="tree-level">
+<strong>المستوى الثالث</strong>
+<div id="level3">جاري التحميل...</div>
+</div>
+
+<div class="tree-level">
+<strong>المستويات الأخرى</strong>
+<div id="levelOther">جاري التحميل...</div>
+</div>
+
+</div>
+</div>
+
+
+<!-- WALLET -->
+
+<div class="page hidden" id="walletPage">
+<div class="card">
+
+<h2>💰 المحفظة</h2>
+
+<div class="wallet-balance">
+<span id="balanceValue">0.00</span> USDT
+</div>
+
+<p style="text-align:center">
+الرصيد الحالي
+</p>
+
+<button onclick="showDeposit()">إيداع</button>
+
+<button class="secondary" onclick="showWithdraw()">
+سحب
+</button>
+
+</div>
+</div>
+
+
+<!-- DEPOSIT -->
+
+<div class="page hidden" id="depositPage">
+<div class="card">
+
+<h2>💳 إيداع USDT</h2>
+
+<p>اختر شبكة التحويل:</p>
+
+<select id="network" onchange="updateNetwork()">
+
+<option value="TRC20">TRC20</option>
+
+<option value="BEP20">BEP20</option>
+
+</select>
+
+<div class="network-box">
+
+<strong>عنوان التحويل</strong>
+
+<div class="address" id="walletAddress">
+TA6BZiw5aqLqJg7mJYRnotpe7xkvRND8yM
+</div>
+
+<button onclick="copyWalletAddress()">
+نسخ العنوان
+</button>
+
+</div>
+
+<input
+type="number"
+id="depositAmount"
+placeholder="مبلغ الإيداع USDT"
+min="0"
+step="0.01">
+
+<div class="file-box">
+
+<label>صورة إثبات التحويل</label>
+
+<input
+type="file"
+id="depositProof"
+accept="image/*">
+
+</div>
+
+<button onclick="submitDeposit()">
+إرسال طلب الإيداع
+</button>
+
+<button class="secondary" onclick="showWallet()">
+العودة إلى المحفظة
+</button>
+
+<div class="message" id="depositMessage"></div>
+
+</div>
+</div>
+
+
+<!-- WITHDRAW -->
+
+<div class="page hidden" id="withdrawPage">
+<div class="card">
+
+<h2>💸 سحب USDT</h2>
+
+<div class="wallet-balance">
+<span id="withdrawBalance">0.00</span> USDT
+</div>
+
+<p style="text-align:center">
+الرصيد المتاح للسحب
+</p>
+
+<select id="withdrawNetwork">
+
+<option value="TRC20">
+TRC20
+</option>
+
+<option value="BEP20">
+BEP20
+</option>
+
+</select>
+
+<input
+type="number"
+id="withdrawAmount"
+placeholder="مبلغ السحب USDT"
+min="0"
+step="0.01">
+
+<input
+type="text"
+id="withdrawWallet"
+class="ltr"
+placeholder="عنوان محفظتك">
+<div class="withdraw-info">
+⚠️ تأكد من اختيار الشبكة الصحيحة وكتابة عنوان المحفظة بشكل صحيح.
+</div>
+
+<button onclick="submitWithdraw()">
+إرسال طلب السحب
+</button>
+
+<button class="secondary" onclick="showWallet()">
+العودة إلى المحفظة
+</button>
+
+<div class="message" id="withdrawMessage"></div>
+
+</div>
+</div>
+
+
+<!-- ADMIN -->
+
+<div class="page hidden" id="adminPage">
+<div class="card">
+
+<h2>⚙️ لوحة الإدارة</h2>
+
+<button class="secondary" onclick="showHome()">
+العودة للرئيسية
+</button>
+
+<div id="adminMessage" class="message"></div>
+
+<div id="adminMenu" class="admin-menu">
+
+<button onclick="showAdminDeposits()">
+💳 طلبات الإيداع
+</button>
+
+<button onclick="showAdminWithdrawals()">
+💸 طلبات السحب
+</button>
+
+</div>
+
+
+<!-- ADMIN DEPOSITS -->
+
+<div id="adminDepositsSection" class="hidden">
+
+<h3>💳 طلبات الإيداع</h3>
+
+<button class="secondary" onclick="showAdminMenu()">
+↩️ رجوع
+</button>
+
+<div id="adminDeposits">
+جاري تحميل الطلبات...
+</div>
+
+</div>
+
+
+<!-- ADMIN WITHDRAWALS -->
+
+<div id="adminWithdrawalsSection" class="hidden">
+
+<h3>💸 طلبات السحب</h3>
+
+<button class="secondary" onclick="showAdminMenu()">
+↩️ رجوع
+</button>
+
+<div id="adminWithdrawals">
+جاري تحميل طلبات السحب...
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- NAV -->
+
+<div class="bottom-nav hidden" id="bottomNav">
+
+<div class="nav-inner">
+
+<button class="nav-btn active" id="homeNav" onclick="showHome()">
+<span>🏠</span>
+الرئيسية
+</button>
+
+<button class="nav-btn" id="infoNav" onclick="showInfo()">
+<span>👤</span>
+معلوماتي
+</button>
+
+<button class="nav-btn" id="treeNav" onclick="showTree()">
+<span>🌳</span>
+الشجرة
+</button>
+
+<button class="nav-btn" id="walletNav" onclick="showWallet()">
+<span>💰</span>
+المحفظة
+</button>
+
+</div>
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://kfcttgoqlapkctvucgzp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_ubteDqk934fIz4G1vPoZOw_vIWJab9v";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+let captchaCode = "";
+
+const wallets = {
+
+TRC20:
+"TA6BZiw5aqLqJg7mJYRnotpe7xkvRND8yM",
+
+BEP20:
+"0xbd509e6483d779cc7214b75ab9d21de1d51fc151"
+
+};
+
+
+/* الصفحات */
+
+function hidePages(){
+
+document
+.querySelectorAll(".page")
+.forEach(function(page){
+
+page.classList.add("hidden");
+
+});
+
+}
+
+
+function showNav(){
+
+document
+.getElementById("bottomNav")
+.classList.remove("hidden");
+
+}
+
+
+function hideNav(){
+
+document
+.getElementById("bottomNav")
+.classList.add("hidden");
+
+}
+
+
+function activeNav(id){
+
+document
+.querySelectorAll(".nav-btn")
+.forEach(function(btn){
+
+btn.classList.remove("active");
+
+});
+
+if(id){
+
+document
+.getElementById(id)
+.classList.add("active");
+
+}
+
+}
+
+
+function showHome(){
+
+hidePages();
+
+document
+.getElementById("homePage")
+.classList.remove("hidden");
+
+showNav();
+
+activeNav("homeNav");
+
+}
+
+
+function showInfo(){
+
+hidePages();
+
+document
+.getElementById("infoPage")
+.classList.remove("hidden");
+
+showNav();
+
+activeNav("infoNav");
+
+}
+
+
+async function showTree(){
+
+hidePages();
+
+document
+.getElementById("treePage")
+.classList.remove("hidden");
+
+showNav();
+
+activeNav("treeNav");
+
+await loadTree();
+
+}
+
+
+async function showWallet(){
+
+hidePages();
+
+document
+.getElementById("walletPage")
+.classList.remove("hidden");
+
+showNav();
+
+activeNav("walletNav");
+
+await loadBalance();
+
+}
+
+
+function showDeposit(){
+
+hidePages();
+
+document
+.getElementById("depositPage")
+.classList.remove("hidden");
+
+showNav();
+
+activeNav("walletNav");
+
+updateNetwork();
+
+}
+
+
+async function showWithdraw(){
+
+hidePages();
+
+document
+.getElementById("withdrawPage")
+.classList.remove("hidden");
+
+showNav();
+
+activeNav("walletNav");
+
+await loadWithdrawBalance();
+
+}
+
+
+function showLogin(){
+
+hidePages();
+
+hideNav();
+
+document
+.getElementById("loginPage")
+.classList.remove("hidden");
+
+}
+
+
+function showRegister(){
+
+hidePages();
+
+hideNav();
+
+document
+.getElementById("registerPage")
+.classList.remove("hidden");
+
+}
+
+
+function showReset(){
+
+hidePages();
+
+hideNav();
+
+document
+.getElementById("resetPage")
+.classList.remove("hidden");
+
+}
+
+
+/* CAPTCHA */
+
+function generateCaptcha(){
+  captchaCode =
+Math.floor(
+10000 + Math.random() * 90000
+).toString();
+
+document
+.getElementById("captcha")
+.textContent =
+captchaCode;
+
+document
+.getElementById("captchaInput")
+.value = "";
+
+}
+
+
+/* REGISTER */
+
+async function register(){
+
+const email =
+document
+.getElementById("registerEmail")
+.value.trim();
+
+const username =
+document
+.getElementById("registerUsername")
+.value.trim();
+
+const password =
+document
+.getElementById("registerPassword")
+.value;
+
+const referral =
+document
+.getElementById("registerReferral")
+.value
+.trim()
+.toUpperCase();
+
+const captchaInput =
+document
+.getElementById("captchaInput")
+.value.trim();
+
+const message =
+document
+.getElementById("registerMessage");
+
+
+if(
+!email ||
+!username ||
+!password ||
+!captchaInput
+){
+
+message.textContent =
+"املأ جميع الحقول المطلوبة";
+
+return;
+
+}
+
+
+if(captchaInput !== captchaCode){
+
+message.textContent =
+"رمز التحقق غير صحيح ❌";
+
+generateCaptcha();
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+message.textContent =
+"كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+
+return;
+
+}
+
+
+let referrerId = null;
+
+
+if(referral){
+
+const result =
+await supabaseClient.rpc(
+"find_referrer",
+{
+ref_code:referral
+}
+);
+
+
+if(result.error){
+
+message.textContent =
+"حدث خطأ في التحقق من رمز الدعوة";
+
+return;
+
+}
+
+
+if(!result.data){
+
+message.textContent =
+"رمز الدعوة غير صحيح ❌";
+
+return;
+
+}
+
+
+referrerId =
+result.data;
+
+}
+
+
+const result =
+await supabaseClient.auth.signUp({
+
+email:email,
+
+password:password,
+
+options:{
+data:{
+username:username
+}
+}
+
+});
+
+
+if(result.error){
+
+message.textContent =
+"حدث خطأ: " +
+result.error.message;
+
+return;
+
+}
+
+
+if(!result.data.user){
+
+message.textContent =
+"تعذر إنشاء الحساب";
+
+return;
+
+}
+
+
+const profileResult =
+await supabaseClient
+.from("profiles")
+.insert({
+
+id:result.data.user.id,
+
+username:username,
+
+referred_by:referrerId
+
+});
+
+
+if(profileResult.error){
+
+message.textContent =
+"تم إنشاء الحساب، لكن حدث خطأ في حفظ البيانات: " +
+profileResult.error.message;
+
+return;
+
+}
+
+
+message.textContent =
+"تم إنشاء الحساب بنجاح ✅";
+
+generateCaptcha();
+
+}
+
+
+/* LOGIN */
+
+async function login(){
+
+const email =
+document
+.getElementById("loginEmail")
+.value.trim();
+
+const password =
+document
+.getElementById("loginPassword")
+.value;
+
+const message =
+document
+.getElementById("loginMessage");
+
+
+if(!email || !password){
+
+message.textContent =
+"اكتب البريد الإلكتروني وكلمة المرور";
+
+return;
+
+}
+
+
+message.textContent =
+"جاري تسجيل الدخول...";
+
+
+try{
+
+const result =
+await supabaseClient.auth.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
+
+
+if(result.error){
+
+message.textContent =
+"فشل تسجيل الدخول: " +
+result.error.message;
+
+return;
+
+}
+
+
+await loadProfile(
+result.data.user.id
+);
+
+
+}catch(error){
+
+message.textContent =
+"حدث خطأ أثناء تسجيل الدخول: " +
+error.message;
+
+}
+
+}
+
+
+/* PROFILE */
+
+async function loadProfile(userId){
+
+const result =
+await supabaseClient
+.from("profiles")
+.select(
+"username,referral_code,is_admin,balance"
+)
+.eq("id",userId)
+.single();
+
+
+if(result.error){
+
+alert(
+"تعذر تحميل بيانات الحساب: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+const session =
+await supabaseClient.auth.getSession();
+
+
+let email = "-";
+
+
+if(
+session.data.session &&
+session.data.session.user
+){
+
+email =
+session.data.session.user.email || "-";
+
+}
+
+
+document
+.getElementById("homeUsername")
+.textContent =
+result.data.username || "-";
+
+
+document
+.getElementById("infoUsername")
+.textContent =
+result.data.username || "-";
+
+
+document
+.getElementById("infoEmail")
+.textContent =
+email;
+
+
+document
+.getElementById("infoReferralCode")
+.textContent =
+result.data.referral_code || "-";
+
+
+document
+.getElementById("balanceValue")
+.textContent =
+Number(result.data.balance || 0)
+.toFixed(2);
+
+
+if(result.data.referral_code){
+
+const link =
+window.location.origin +
+window.location.pathname +
+"?ref=" +
+result.data.referral_code;
+
+document
+.getElementById("infoReferralLink")
+.textContent =
+link;
+
+}
+
+
+if(result.data.is_admin === true){
+
+document
+.getElementById("adminButton")
+.classList.remove("hidden");
+
+}else{
+
+document
+.getElementById("adminButton")
+.classList.add("hidden");
+
+}
+
+
+showHome();
+
+}
+
+
+/* BALANCE */
+  async function loadBalance(){
+
+const session =
+await supabaseClient.auth.getSession();
+
+
+if(
+!session.data.session ||
+!session.data.session.user
+){
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+.from("profiles")
+.select("balance")
+.eq(
+"id",
+session.data.session.user.id
+)
+.single();
+
+
+if(!result.error){
+
+document
+.getElementById("balanceValue")
+.textContent =
+Number(result.data.balance || 0)
+.toFixed(2);
+
+}
+
+}
+
+
+async function loadWithdrawBalance(){
+
+const session =
+await supabaseClient.auth.getSession();
+
+
+if(
+!session.data.session ||
+!session.data.session.user
+){
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+.from("profiles")
+.select("balance")
+.eq(
+"id",
+session.data.session.user.id
+)
+.single();
+
+
+if(!result.error){
+
+document
+.getElementById("withdrawBalance")
+.textContent =
+Number(result.data.balance || 0)
+.toFixed(2);
+
+}
+
+}
+
+
+/* COPY */
+
+async function copyReferralLink(){
+
+const link =
+document
+.getElementById("infoReferralLink")
+.textContent;
+
+
+if(!link || link === "-"){
+
+alert("لا يوجد رابط دعوة");
+
+return;
+
+}
+
+
+try{
+
+await navigator.clipboard.writeText(link);
+
+alert("تم نسخ رابط الدعوة ✅");
+
+}catch{
+
+alert("تعذر النسخ");
+
+}
+
+}
+
+
+function updateNetwork(){
+
+const network =
+document
+.getElementById("network")
+.value;
+
+document
+.getElementById("walletAddress")
+.textContent =
+wallets[network];
+
+}
+
+
+async function copyWalletAddress(){
+
+const address =
+document
+.getElementById("walletAddress")
+.textContent;
+
+try{
+
+await navigator.clipboard.writeText(address);
+
+alert("تم نسخ العنوان ✅");
+
+}catch{
+
+alert("تعذر النسخ");
+
+}
+
+}
+
+
+/* DEPOSIT */
+
+async function submitDeposit(){
+
+const message =
+document
+.getElementById("depositMessage");
+
+
+const amount =
+parseFloat(
+document
+.getElementById("depositAmount")
+.value
+);
+
+
+const network =
+document
+.getElementById("network")
+.value;
+
+
+const file =
+document
+.getElementById("depositProof")
+.files[0];
+
+
+if(!amount || amount <= 0){
+
+message.textContent =
+"اكتب مبلغًا صحيحًا";
+
+return;
+
+}
+
+
+if(!file){
+
+message.textContent =
+"ارفع صورة إثبات التحويل";
+
+return;
+
+}
+
+
+if(!file.type.startsWith("image/")){
+
+message.textContent =
+"الملف يجب أن يكون صورة";
+
+return;
+
+}
+
+
+if(file.size > 10 * 1024 * 1024){
+
+message.textContent =
+"حجم الصورة يجب أن يكون أقل من 10MB";
+
+return;
+
+}
+
+
+const session =
+await supabaseClient.auth.getSession();
+
+
+if(
+!session.data.session ||
+!session.data.session.user
+){
+
+message.textContent =
+"يجب تسجيل الدخول أولًا";
+
+return;
+
+}
+
+
+const user =
+session.data.session.user;
+
+
+message.textContent =
+"جاري إرسال الطلب...";
+
+
+const safeName =
+file.name.replace(
+/[^a-zA-Z0-9._-]/g,
+"_"
+);
+
+
+const fileName =
+user.id +
+"/" +
+Date.now() +
+"_" +
+safeName;
+
+
+const upload =
+await supabaseClient
+.storage
+.from("deposit-proofs")
+.upload(
+fileName,
+file,
+{
+cacheControl:"3600",
+upsert:false
+}
+);
+
+
+if(upload.error){
+
+message.textContent =
+"فشل رفع الصورة: " +
+upload.error.message;
+
+return;
+
+}
+
+
+const insert =
+await supabaseClient
+.from("deposit_requests")
+.insert({
+
+user_id:user.id,
+
+amount:amount,
+
+network:network,
+
+proof_url:fileName,
+
+status:"pending"
+
+});
+
+
+if(insert.error){
+
+message.textContent =
+"فشل إرسال الطلب: " +
+insert.error.message;
+
+return;
+
+}
+
+
+message.textContent =
+"تم إرسال طلب الإيداع بنجاح ✅ وسيتم مراجعته.";
+
+document
+.getElementById("depositAmount")
+.value = "";
+
+document
+.getElementById("depositProof")
+.value = "";
+
+}
+
+
+/* WITHDRAW */
+
+async function submitWithdraw(){
+
+const message =
+document
+.getElementById("withdrawMessage");
+
+
+const amount =
+parseFloat(
+document
+.getElementById("withdrawAmount")
+.value
+);
+
+
+const network =
+document
+.getElementById("withdrawNetwork")
+.value;
+
+
+const wallet =
+document
+.getElementById("withdrawWallet")
+.value
+.trim();
+
+
+if(!amount || amount <= 0){
+
+message.textContent =
+"اكتب مبلغ سحب صحيح";
+
+return;
+
+}
+
+
+if(!wallet){
+
+message.textContent =
+"اكتب عنوان محفظتك";
+
+return;
+
+}
+
+
+if(wallet.length < 10){
+
+message.textContent =
+"عنوان المحفظة غير صحيح";
+
+return;
+
+}
+
+
+const session =
+await supabaseClient.auth.getSession();
+
+
+if(
+!session.data.session ||
+!session.data.session.user
+){
+
+message.textContent =
+"يجب تسجيل الدخول أولًا";
+  return;
+
+}
+
+
+message.textContent =
+"جاري إرسال طلب السحب...";
+
+
+const result =
+await supabaseClient.rpc(
+"create_withdraw_request",
+{
+p_amount:amount,
+p_network:network,
+p_wallet_address:wallet
+}
+);
+
+
+if(result.error){
+
+message.textContent =
+"فشل إرسال طلب السحب: " +
+result.error.message;
+
+return;
+
+}
+
+
+message.textContent =
+"تم إرسال طلب السحب بنجاح ✅";
+
+document
+.getElementById("withdrawAmount")
+.value = "";
+
+document
+.getElementById("withdrawWallet")
+.value = "";
+
+await loadWithdrawBalance();
+
+}
+
+
+/* TREE */
+
+async function loadTree(){
+
+const result =
+await supabaseClient.rpc(
+"get_my_referral_tree"
+);
+
+
+if(result.error){
+
+document
+.getElementById("level1")
+.textContent =
+"حدث خطأ في تحميل الشجرة";
+
+return;
+
+}
+
+
+const levels = {
+1:[],
+2:[],
+3:[],
+other:[]
+};
+
+
+(result.data || [])
+.forEach(function(user){
+
+if(user.level === 1){
+
+levels[1].push(user.username);
+
+}else if(user.level === 2){
+
+levels[2].push(user.username);
+
+}else if(user.level === 3){
+
+levels[3].push(user.username);
+
+}else{
+
+levels.other.push(
+user.username +
+" — المستوى " +
+user.level
+);
+
+}
+
+});
+
+
+document
+.getElementById("level1")
+.innerHTML =
+levels[1].length ?
+levels[1].join("<br>") :
+"لا توجد إحالات";
+
+
+document
+.getElementById("level2")
+.innerHTML =
+levels[2].length ?
+levels[2].join("<br>") :
+"لا توجد إحالات";
+
+
+document
+.getElementById("level3")
+.innerHTML =
+levels[3].length ?
+levels[3].join("<br>") :
+"لا توجد إحالات";
+
+
+document
+.getElementById("levelOther")
+.innerHTML =
+levels.other.length ?
+levels.other.join("<br>") :
+"لا توجد إحالات";
+
+}
+
+
+/* RESET */
+
+async function resetPassword(){
+
+const email =
+document
+.getElementById("resetEmail")
+.value
+.trim();
+
+const message =
+document
+.getElementById("resetMessage");
+
+
+if(!email){
+
+message.textContent =
+"اكتب البريد الإلكتروني";
+
+return;
+
+}
+
+
+const result =
+await supabaseClient.auth.resetPasswordForEmail(
+email,
+{
+redirectTo:window.location.href
+}
+);
+
+
+if(result.error){
+
+message.textContent =
+"حدث خطأ: " +
+result.error.message;
+
+return;
+
+}
+
+
+message.textContent =
+"تم إرسال رابط إعادة التعيين ✅";
+
+}
+
+
+/* ADMIN */
+
+async function checkAdmin(){
+
+const session =
+await supabaseClient.auth.getSession();
+
+
+if(
+!session.data.session ||
+!session.data.session.user
+){
+
+return false;
+
+}
+
+
+const result =
+await supabaseClient
+.from("profiles")
+.select("is_admin")
+.eq(
+"id",
+session.data.session.user.id
+)
+.single();
+
+
+return !result.error &&
+result.data.is_admin === true;
+
+}
+
+
+async function showAdmin(){
+
+const admin =
+await checkAdmin();
+
+
+if(!admin){
+
+alert("غير مصرح لك بالدخول");
+
+return;
+
+}
+
+
+hidePages();
+
+document
+.getElementById("adminPage")
+.classList.remove("hidden");
+
+showNav();
+
+activeNav(null);
+
+showAdminMenu();
+
+}
+
+
+/* ADMIN MENU */
+
+function showAdminMenu(){
+
+document
+.getElementById("adminMenu")
+.classList.remove("hidden");
+
+document
+.getElementById("adminDepositsSection")
+.classList.add("hidden");
+
+document
+.getElementById("adminWithdrawalsSection")
+.classList.add("hidden");
+
+}
+
+
+async function showAdminDeposits(){
+
+document
+.getElementById("adminMenu")
+.classList.add("hidden");
+
+document
+.getElementById("adminDepositsSection")
+.classList.remove("hidden");
+
+document
+.getElementById("adminWithdrawalsSection")
+.classList.add("hidden");
+
+await loadAdminDeposits();
+
+}
+
+
+async function showAdminWithdrawals(){
+
+document
+.getElementById("adminMenu")
+.classList.add("hidden");
+
+document
+.getElementById("adminDepositsSection")
+.classList.add("hidden");
+
+document
+.getElementById("adminWithdrawalsSection")
+.classList.remove("hidden");
+
+await loadAdminWithdrawals();
+
+}
+
+
+/* ADMIN DEPOSITS */
+
+async function loadAdminDeposits(){
+
+const message =
+document
+.getElementById("adminMessage");
+
+
+const container =
+document
+.getElementById("adminDeposits");
+
+
+const admin =
+await checkAdmin();
+
+
+if(!admin){
+
+container.innerHTML =
+"<p>غير مصرح لك بالدخول.</p>";
+
+return;
+
+}
+
+
+message.textContent =
+"جاري تحميل الطلبات...";
+
+
+const result =
+await supabaseClient
+.from("deposit_requests")
+.select(
+"id,user_id,amount,network,proof_url,status,created_at"
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+if(result.error){
+  message.textContent =
+"فشل تحميل طلبات الإيداع: " +
+result.error.message;
+
+return;
+
+}
+
+
+if(!result.data || !result.data.length){
+
+container.innerHTML =
+"<p>لا توجد طلبات إيداع.</p>";
+
+message.textContent = "";
+
+return;
+
+}
+
+
+container.innerHTML = "";
+
+
+for(const request of result.data){
+
+let username =
+"غير معروف";
+
+
+const userResult =
+await supabaseClient
+.from("profiles")
+.select("username")
+.eq(
+"id",
+request.user_id
+)
+.single();
+
+
+if(!userResult.error){
+
+username =
+userResult.data.username ||
+"غير معروف";
+
+}
+
+
+const card =
+document.createElement("div");
+
+card.className =
+"deposit-card";
+
+
+let proofHTML = "";
+
+
+if(request.proof_url){
+
+const signedResult =
+await supabaseClient
+.storage
+.from("deposit-proofs")
+.createSignedUrl(
+request.proof_url,
+3600
+);
+
+
+if(
+!signedResult.error &&
+signedResult.data &&
+signedResult.data.signedUrl
+){
+
+const url =
+signedResult.data.signedUrl
+.replace(/'/g,"%27");
+
+
+proofHTML =
+
+<img
+src="${url}"
+alt="إثبات التحويل"
+onclick="window.open('${url}','_blank')"
+style="cursor:pointer">
+;
+
+}else{
+
+proofHTML =
+"<p>❌ تعذر فتح صورة الإثبات</p>";
+
+}
+
+}
+
+
+let statusText =
+request.status;
+
+
+if(request.status === "pending"){
+statusText = "قيد المراجعة";
+}
+
+if(request.status === "approved"){
+statusText = "مقبول";
+}
+
+if(request.status === "rejected"){
+statusText = "مرفوض";
+}
+
+
+let buttons = "";
+
+
+if(request.status === "pending"){
+
+buttons =
+
+<button
+class="success"
+onclick="approveDeposit('${request.id}')">
+قبول ✅
+</button>
+
+<button
+class="danger"
+onclick="rejectDeposit('${request.id}')">
+رفض ❌
+</button>
+;
+
+}
+
+
+card.innerHTML =
+
+<strong>المستخدم:</strong>
+${escapeHTML(username)}
+<br>
+
+<strong>المبلغ:</strong>
+${Number(request.amount).toFixed(2)}
+USDT
+<br>
+
+<strong>الشبكة:</strong>
+${escapeHTML(request.network || "-")}
+<br>
+
+<strong>التاريخ:</strong>
+${new Date(
+request.created_at
+).toLocaleString()}
+<br>
+
+<span class="status ${escapeHTML(request.status)}">
+${statusText}
+</span>
+
+${proofHTML}
+
+<div class="deposit-actions">
+${buttons}
+</div>
+;
+
+
+container.appendChild(card);
+
+}
+
+
+message.textContent = "";
+
+}
+
+
+/* ADMIN WITHDRAWALS */
+
+async function loadAdminWithdrawals(){
+
+const container =
+document
+.getElementById("adminWithdrawals");
+
+
+const admin =
+await checkAdmin();
+
+
+if(!admin){
+
+container.innerHTML =
+"<p>غير مصرح لك بالدخول.</p>";
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+.from("withdraw_requests")
+.select(
+"id,user_id,amount,network,wallet_address,status,created_at"
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+if(result.error){
+
+container.innerHTML =
+"<p>فشل تحميل طلبات السحب: " +
+escapeHTML(result.error.message) +
+"</p>";
+
+return;
+
+}
+
+
+if(!result.data || !result.data.length){
+
+container.innerHTML =
+"<p>لا توجد طلبات سحب.</p>";
+
+return;
+
+}
+
+
+container.innerHTML = "";
+
+
+for(const request of result.data){
+
+let username =
+"غير معروف";
+
+
+const userResult =
+await supabaseClient
+.from("profiles")
+.select("username")
+.eq(
+"id",
+request.user_id
+)
+.single();
+
+
+if(!userResult.error){
+
+username =
+userResult.data.username ||
+"غير معروف";
+
+}
+
+
+let statusText =
+request.status;
+
+
+if(request.status === "pending"){
+statusText = "قيد المراجعة";
+}
+
+if(request.status === "approved"){
+statusText = "تم التنفيذ";
+}
+
+if(request.status === "rejected"){
+statusText = "مرفوض";
+}
+
+
+let buttons = "";
+
+
+if(request.status === "pending"){
+
+buttons =
+
+<div class="deposit-actions">
+
+<button
+class="success"
+onclick="approveWithdrawal('${escapeHTML(request.id)}')">
+تم التحويل ✅
+</button>
+
+<button
+class="danger"
+onclick="rejectWithdrawal('${escapeHTML(request.id)}')">
+رفض ❌
+</button>
+
+</div>
+;
+
+}
+
+
+const card =
+document.createElement("div");
+
+card.className =
+"withdraw-card";
+
+
+card.innerHTML =
+`
+<strong>المستخدم:</strong>
+${escapeHTML(username)}
+<br>
+
+<strong>المبلغ:</strong>
+${Number(request.amount).toFixed(2)}
+USDT
+<br>
+
+<strong>الشبكة:</strong>
+${escapeHTML(request.network || "-")}
+<br>
+
+<strong>عنوان المحفظة:</strong>
+
+<div class="address">
+${escapeHTML(request.wallet_address)}
+</div>
+
+<strong>التاريخ:</strong>
+${new Date(
+request.created_at
+).toLocaleString()}
+message.textContent =
+"فشل تحميل طلبات الإيداع: " +
+result.error.message;
+
+return;
+
+}
+
+
+if(!result.data || !result.data.length){
+
+container.innerHTML =
+"<p>لا توجد طلبات إيداع.</p>";
+
+message.textContent = "";
+
+return;
+
+}
+
+
+container.innerHTML = "";
+
+
+for(const request of result.data){
+
+let username =
+"غير معروف";
+
+
+const userResult =
+await supabaseClient
+.from("profiles")
+.select("username")
+.eq(
+"id",
+request.user_id
+)
+.single();
+
+
+if(!userResult.error){
+
+username =
+userResult.data.username ||
+"غير معروف";
+
+}
+
+
+const card =
+document.createElement("div");
+
+card.className =
+"deposit-card";
+
+
+let proofHTML = "";
+
+
+if(request.proof_url){
+
+const signedResult =
+await supabaseClient
+.storage
+.from("deposit-proofs")
+.createSignedUrl(
+request.proof_url,
+3600
+);
+
+
+if(
+!signedResult.error &&
+signedResult.data &&
+signedResult.data.signedUrl
+){
+
+const url =
+signedResult.data.signedUrl
+.replace(/'/g,"%27");
+
+
+proofHTML =
+
+<img
+src="${url}"
+alt="إثبات التحويل"
+onclick="window.open('${url}','_blank')"
+style="cursor:pointer">
+;
+
+}else{
+
+proofHTML =
+"<p>❌ تعذر فتح صورة الإثبات</p>";
+
+}
+
+}
+
+
+let statusText =
+request.status;
+
+
+if(request.status === "pending"){
+statusText = "قيد المراجعة";
+}
+
+if(request.status === "approved"){
+statusText = "مقبول";
+}
+
+if(request.status === "rejected"){
+statusText = "مرفوض";
+}
+
+
+let buttons = "";
+
+
+if(request.status === "pending"){
+
+buttons =
+
+<button
+class="success"
+onclick="approveDeposit('${request.id}')">
+قبول ✅
+</button>
+
+<button
+class="danger"
+onclick="rejectDeposit('${request.id}')">
+رفض ❌
+</button>
+;
+
+}
+
+
+card.innerHTML =
+
+<strong>المستخدم:</strong>
+${escapeHTML(username)}
+<br>
+
+<strong>المبلغ:</strong>
+${Number(request.amount).toFixed(2)}
+USDT
+<br>
+
+<strong>الشبكة:</strong>
+${escapeHTML(request.network || "-")}
+<br>
+
+<strong>التاريخ:</strong>
+${new Date(
+request.created_at
+).toLocaleString()}
+<br>
+
+<span class="status ${escapeHTML(request.status)}">
+${statusText}
+</span>
+
+${proofHTML}
+
+<div class="deposit-actions">
+${buttons}
+</div>
+;
+
+
+container.appendChild(card);
+
+}
+
+
+message.textContent = "";
+
+}
+
+
+/* ADMIN WITHDRAWALS */
+
+async function loadAdminWithdrawals(){
+
+const container =
+document
+.getElementById("adminWithdrawals");
+
+
+const admin =
+await checkAdmin();
+
+
+if(!admin){
+
+container.innerHTML =
+"<p>غير مصرح لك بالدخول.</p>";
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+.from("withdraw_requests")
+.select(
+"id,user_id,amount,network,wallet_address,status,created_at"
+)
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+if(result.error){
+
+container.innerHTML =
+"<p>فشل تحميل طلبات السحب: " +
+escapeHTML(result.error.message) +
+"</p>";
+
+return;
+
+}
+
+
+if(!result.data || !result.data.length){
+
+container.innerHTML =
+"<p>لا توجد طلبات سحب.</p>";
+
+return;
+
+}
+
+
+container.innerHTML = "";
+
+
+for(const request of result.data){
+
+let username =
+"غير معروف";
+
+
+const userResult =
+await supabaseClient
+.from("profiles")
+.select("username")
+.eq(
+"id",
+request.user_id
+)
+.single();
+
+
+if(!userResult.error){
+
+username =
+userResult.data.username ||
+"غير معروف";
+
+}
+
+
+let statusText =
+request.status;
+
+
+if(request.status === "pending"){
+statusText = "قيد المراجعة";
+}
+
+if(request.status === "approved"){
+statusText = "تم التنفيذ";
+}
+
+if(request.status === "rejected"){
+statusText = "مرفوض";
+}
+
+
+let buttons = "";
+
+
+if(request.status === "pending"){
+
+buttons =
+
+<div class="deposit-actions">
+
+<button
+class="success"
+onclick="approveWithdrawal('${escapeHTML(request.id)}')">
+تم التحويل ✅
+</button>
+
+<button
+class="danger"
+onclick="rejectWithdrawal('${escapeHTML(request.id)}')">
+رفض ❌
+</button>
+
+</div>
+;
+
+}
+
+
+const card =
+document.createElement("div");
+
+card.className =
+"withdraw-card";
+
+
+card.innerHTML =
+`
+<strong>المستخدم:</strong>
+${escapeHTML(username)}
+<br>
+
+<strong>المبلغ:</strong>
+${Number(request.amount).toFixed(2)}
+USDT
+<br>
+
+<strong>الشبكة:</strong>
+${escapeHTML(request.network || "-")}
+<br>
+
+<strong>عنوان المحفظة:</strong>
+
+<div class="address">
+${escapeHTML(request.wallet_address)}
+</div>
+
+<strong>التاريخ:</strong>
+${new Date(
+request.created_at
+).toLocaleString()}
+<br>
+  <span class="status ${escapeHTML(request.status)}">
+${statusText}
+</span>
+
+${buttons}
+`;
+
+container.appendChild(card);
+
+}
+
+}
+
+
+/* APPROVE DEPOSIT */
+
+async function approveDeposit(id){
+
+if(!confirm(
+"هل تريد قبول هذا الإيداع وإضافة المبلغ إلى رصيد المستخدم؟"
+)){
+
+return;
+
+}
+
+
+const result =
+await supabaseClient.rpc(
+"approve_deposit",
+{
+request_id:id
+}
+);
+
+
+if(result.error){
+
+alert(
+"فشل قبول الطلب: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+alert(
+"تم قبول الإيداع وإضافة الرصيد ✅"
+);
+
+
+await loadAdminDeposits();
+
+}
+
+
+/* REJECT DEPOSIT */
+
+async function rejectDeposit(id){
+
+if(!confirm(
+"هل تريد رفض هذا الإيداع؟"
+)){
+
+return;
+
+}
+
+
+const result =
+await supabaseClient.rpc(
+"reject_deposit",
+{
+request_id:id
+}
+);
+
+
+if(result.error){
+
+alert(
+"فشل رفض الطلب: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+alert("تم رفض الإيداع ❌");
+
+
+await loadAdminDeposits();
+
+}
+
+
+/* APPROVE WITHDRAWAL */
+
+async function approveWithdrawal(id){
+
+/*
+  لا تستخدم Number(id) هنا.
+  الـ id يمكن أن يكون UUID أو قيمة نصية.
+*/
+
+if(!id){
+
+alert("رقم طلب السحب غير موجود.");
+
+return;
+
+}
+
+
+if(!confirm(
+"هل تم تحويل المبلغ للمستخدم فعلًا؟"
+)){
+
+return;
+
+}
+
+
+const result =
+await supabaseClient
+.from("withdraw_requests")
+.update({
+status:"approved"
+})
+.eq(
+"id",
+id
+)
+.eq(
+"status",
+"pending"
+)
+.select("id,status");
+
+
+if(result.error){
+
+alert(
+"فشل تحديث طلب السحب: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+if(!result.data || result.data.length === 0){
+
+alert(
+"لم يتم تحديث الطلب. قد يكون الطلب غير موجود أو تمت معالجته مسبقًا."
+);
+
+return;
+
+}
+
+
+alert(
+"تم تسجيل السحب كمقبول ✅"
+);
+
+
+await loadAdminWithdrawals();
+
+}
+
+
+/* REJECT WITHDRAWAL */
+
+async function rejectWithdrawal(id){
+
+/*
+  لا تستخدم Number(id) هنا أيضًا.
+*/
+
+if(!id){
+
+alert("رقم طلب السحب غير موجود.");
+
+return;
+
+}
+
+
+if(!confirm(
+"هل تريد رفض طلب السحب وإرجاع المبلغ للمستخدم؟"
+)){
+
+return;
+
+}
+
+
+const result =
+await supabaseClient.rpc(
+"reject_withdraw_request",
+{
+p_request_id:id
+}
+);
+
+
+if(result.error){
+
+alert(
+"فشل رفض السحب: " +
+result.error.message
+);
+
+return;
+
+}
+
+
+alert(
+"تم رفض السحب وإرجاع المبلغ للمستخدم ✅"
+);
+
+
+await loadAdminWithdrawals();
+
+}
+
+
+/* ESCAPE */
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* REFERRAL */
+
+function loadReferralFromURL(){
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const ref =
+params.get("ref");
+
+
+if(ref){
+
+document
+.getElementById("registerReferral")
+.value =
+ref.toUpperCase();
+
+}
+
+}
+
+
+/* SESSION */
+
+async function checkSession(){
+
+try{
+
+const result =
+await supabaseClient.auth.getSession();
+
+
+if(
+result.data.session &&
+result.data.session.user
+){
+
+await loadProfile(
+result.data.session.user.id
+);
+
+}else{
+
+showLogin();
+
+}
+
+}catch(error){
+
+showLogin();
+
+}
+
+}
+
+
+/* START */
+
+generateCaptcha();
+
+loadReferralFromURL();
+
+checkSession();
+
+</script>
+
+</body>
+</html>
+<br>
